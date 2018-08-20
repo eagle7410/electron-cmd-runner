@@ -1,0 +1,29 @@
+{
+  "name": "electron-cmd-runner",
+  "version": "1.0.0",
+  "description": "electron cmd runner",
+  "main": "index-app-dev.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eagle7410/electron-cmd-runner.git"
+  },
+  "author": "Igor Stcherbina <verycooleagle@gmail.com> (http://github.com/eagle7410)",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "7.0.0",
+    "node-cmd": "3.0.0"
+  },
+  "devDependencies": {
+    "electron": "2.0.5",
+    "electron-devtools-installer": "2.2.4",
+    "electron-packager": "12.1.0",
+    "console-color": "https://github.com/eagle7410/console-color.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eagle7410/electron-cmd-runner/issues"
+  },
+  "homepage": "https://github.com/eagle7410/electron-cmd-runner#readme"
+}
