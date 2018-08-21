@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from "react-redux";
 
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
@@ -8,6 +9,7 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Actions from './Actions'
+import {runs} from "../reducers/runs";
 
 const styles = theme => ({
 	root: {
@@ -22,20 +24,14 @@ const styles = theme => ({
 
 const ListCommand = (state) => {
 
-	const { classes } = state;
-
 	return (
 		<div style={{marginTop : 45}} >
 			<ExpansionPanel defaultExpanded={false} >
 				<ExpansionPanelActions >
 					<Actions />
 				</ExpansionPanelActions>
-				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}
-
-				>
-					<Typography className={classes.heading}>
-
-
+				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} >
+					<Typography>
 						Expansion Panel 1
 					</Typography>
 				</ExpansionPanelSummary>
@@ -54,7 +50,7 @@ const ListCommand = (state) => {
 				console.log('ev change is', ev.target.getAttribute('role'))
 			}}>
 				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-					<Typography className={classes.heading}>
+					<Typography>
 						<Actions />
 						Expansion Panel 2
 					</Typography>
@@ -70,4 +66,11 @@ const ListCommand = (state) => {
 	);
 };
 
-export default withStyles(styles)(ListCommand);
+export default connect(
+	state => ({
+		store : state.runs,
+	}),
+	dispatch => ({
+	})
+)(ListCommand);
+
