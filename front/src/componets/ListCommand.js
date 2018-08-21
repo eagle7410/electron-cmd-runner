@@ -1,12 +1,13 @@
 import React from 'react';
 
-import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Actions from './Actions'
 
 const styles = theme => ({
 	root: {
@@ -24,20 +25,39 @@ const ListCommand = (state) => {
 	const { classes } = state;
 
 	return (
-		<div style={{marginTop : 45}}>
-			<ExpansionPanel>
-				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-					<Typography className={classes.heading}>Expansion Panel 1</Typography>
+		<div style={{marginTop : 45}} >
+			<ExpansionPanel defaultExpanded={false} >
+				<ExpansionPanelActions >
+					<Actions />
+				</ExpansionPanelActions>
+				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}
+
+				>
+					<Typography className={classes.heading}>
+
+
+						Expansion Panel 1
+					</Typography>
 				</ExpansionPanelSummary>
+
 				<ExpansionPanelDetails>
 					<Typography>
 						Lorem ipsum dolor sit amet, consecte
 					</Typography>
 				</ExpansionPanelDetails>
 			</ExpansionPanel>
-			<ExpansionPanel>
+
+
+			<ExpansionPanel onClick={ev => {
+				ev.preventDefault();
+				return false;
+				console.log('ev change is', ev.target.getAttribute('role'))
+			}}>
 				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-					<Typography className={classes.heading}>Expansion Panel 2</Typography>
+					<Typography className={classes.heading}>
+						<Actions />
+						Expansion Panel 2
+					</Typography>
 				</ExpansionPanelSummary>
 				<ExpansionPanelDetails>
 					<Typography>
