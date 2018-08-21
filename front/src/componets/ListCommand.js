@@ -1,7 +1,7 @@
 import React from 'react';
+import TextField from '@material-ui/core/TextField';
 import {connect} from "react-redux";
 
-import { withStyles } from '@material-ui/core/styles';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -9,59 +9,66 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Actions from './Actions'
-import {runs} from "../reducers/runs";
-
-const styles = theme => ({
-	root: {
-		width: '100%',
-	},
-	heading: {
-		fontSize: theme.typography.pxToRem(15),
-		fontWeight: theme.typography.fontWeightRegular,
-	},
-});
-
+import {PREFIX_RUNS as PREFIX} from "../const/prefix";
 
 const ListCommand = (state) => {
 
+	let runs = (
+		<ExpansionPanel disabled={true}>
+			<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+				<Typography>
+					No runs
+				</Typography>
+			</ExpansionPanelSummary>
+			<ExpansionPanelActions style={{display:'none'}}/>
+		</ExpansionPanel>
+	);
+
+	if (state.store.data.length) {
+		runs = state.store.data.map((run,inx) => {
+			return <ExpansionPanel
+				key={`run_${inx}`}
+				expanded={run.isOpen}
+				>
+				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} onClick={ev => {
+					ev.preventDefault();
+
+					if(['actions', 'action'].includes(ev.target.getAttribute('role')) ) return false;
+
+					state.changeOpenPanel({isOpen : !run.isOpen, inx});
+
+				}}>
+					<Typography>
+						<Actions run={run} inx={inx}/>
+						{run.label}
+					</Typography>
+				</ExpansionPanelSummary>
+				<ExpansionPanelDetails>
+					<div>
+						<TextField
+							id={`cmd_${inx}`}
+							label="Command"
+							value={run.cmd}
+							fullWidth={true}
+							className="field_cmd"
+						/>
+						<TextField
+							id={`comment_${inx}`}
+							label="Comment"
+							value={run.comment}
+							fullWidth={true}
+							multiline={true}
+							className="field_cmd"
+						/>
+					</div>
+				</ExpansionPanelDetails>
+			</ExpansionPanel>
+		});
+	}
+
 	return (
 		<div style={{marginTop : 45}} >
-			<ExpansionPanel defaultExpanded={false} >
-				<ExpansionPanelActions >
-					<Actions />
-				</ExpansionPanelActions>
-				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} >
-					<Typography>
-						Expansion Panel 1
-					</Typography>
-				</ExpansionPanelSummary>
-
-				<ExpansionPanelDetails>
-					<Typography>
-						Lorem ipsum dolor sit amet, consecte
-					</Typography>
-				</ExpansionPanelDetails>
-			</ExpansionPanel>
-
-
-			<ExpansionPanel onClick={ev => {
-				ev.preventDefault();
-				return false;
-				console.log('ev change is', ev.target.getAttribute('role'))
-			}}>
-				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-					<Typography>
-						<Actions />
-						Expansion Panel 2
-					</Typography>
-				</ExpansionPanelSummary>
-				<ExpansionPanelDetails>
-					<Typography>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-						sit amet blandit leo lobortis eget.
-					</Typography>
-				</ExpansionPanelDetails>
-			</ExpansionPanel>
+			{runs}
 		</div>
 	);
 };
@@ -71,6 +78,7 @@ export default connect(
 		store : state.runs,
 	}),
 	dispatch => ({
+		changeOpenPanel : (data) => dispatch({type :`${PREFIX}_CHANGE_OPEN_PANEL`, data}),
 	})
-)(ListCommand);
+)(ListCommand)
 

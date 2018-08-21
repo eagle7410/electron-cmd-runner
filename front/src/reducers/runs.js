@@ -1,10 +1,26 @@
-const PREFIX = 'RUNS';
+import {PREFIX_RUNS as PREFIX} from '../const/prefix'
 
 const initialState = {
-	data : []
+	data : [
+		{
+			label         : 'cmd1',
+			cmd           : 'ls',
+			comment       : 'Comment',
+			isOpen        : false,
+			isActionsOpen : false,
+		},
+		{
+			label         : 'cmd2',
+			cmd           : 'ls',
+			comment       : 'Comment',
+			isOpen        : false,
+			isActionsOpen : false,
+		}
+	]
 };
 
 const runs = (state = initialState, action) => {
+	let data;
 	// eslint-disable-next-line
 	switch (action.type) {
 
@@ -13,39 +29,28 @@ const runs = (state = initialState, action) => {
 				...state,
 				errors : action.data
 			};
-		case `${PREFIX}_LOAD`:
+
+		case `${PREFIX}_CHANGE_OPEN_ACTIONS`:
+			data = state.data.map((run, inx) => {
+				if (inx === action.data.inx) run.isActionsOpen = action.data.open;
+
+				return run;
+			});
 			return {
 				...state,
-				isLoad : true
+				data
 			};
 
-		case `${PREFIX}_LOAD_STOP`:
+		case `${PREFIX}_CHANGE_OPEN_PANEL`:
+			data = state.data.map((run, inx) => {
+				if (inx === action.data.inx) run.isOpen = action.data.isOpen;
+
+				return run;
+			});
 			return {
 				...state,
-				isLoad : false
+				data
 			};
-
-		case `${PREFIX}_CHANGE_FIELD`:
-			return {
-				...state,
-				[action.field] : action.value
-			};
-
-		case `${PREFIX}_UPDATE`:
-			return {
-				...state,
-				...action.data
-			};
-
-		case `${PREFIX}_OPEN`:
-			return {
-				...state,
-				...action.data,
-				isOpen: true
-			};
-
-		case `${PREFIX}_CLOSE`:
-			return {...initialState};
 	}
 
 	return state;
