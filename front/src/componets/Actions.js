@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Divider from '@material-ui/core/Divider';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import connect from "react-redux/es/connect/connect";
-import {PREFIX_RUNS as PREFIX} from "../const/prefix";
+import {PREFIX_RUNS, PREFIX_CONFIRM} from "../const/prefix";
 import Api from '../api';
 
 const ITEM_HEIGHT = 48;
@@ -14,9 +14,12 @@ const Actions = (state) => {
 
 	const open = state.run.isActionsOpen;
 
-	const handlerDelete = async () => {
-		if (!window.confirm('You sure?')) return false;
-		alert('DD');
+	const handlerDelete = () => {
+		state.openConfirm(() => {
+			Api.deleteById(state.run.id)
+				.then(() => state.drop(state.run.id))
+				.catch(err => err.message || err );
+		});
 	};
 	const handlerSaveChanges = async () => {
 		await Api.update(state.run);
@@ -49,7 +52,7 @@ const Actions = (state) => {
 				<MenuItem key={'RUN' + state.inx} role="action">RUN</MenuItem>
 				<MenuItem key={'RUN & EXIT' + state.inx} role="action">RUN & EXIT</MenuItem>
 				<MenuItem key={'SAVE CHANGES' + state.inx} role="action" onClick={() =>handlerSaveChanges()}>SAVE CHANGES</MenuItem>
-				<MenuItem key={'DELETE' + state.inx} role="action">DELETE</MenuItem>
+				<MenuItem key={'DELETE' + state.inx} role="action"onClick={ev => handlerDelete()} >DELETE</MenuItem>
 				<Divider/>
 				<MenuItem key={'CANCEL ' + state.inx} role="action" onClick={ev => {
 					ev.preventDefault();
@@ -67,6 +70,8 @@ export default connect(
 		store : state.runs,
 	}),
 	dispatch => ({
-		changeOpenActions : (data) => dispatch({type :`${PREFIX}_CHANGE_OPEN_ACTIONS`, data}),
+		drop : data =>  dispatch({type :`${PREFIX_RUNS}_DROP_RUN`, data}),
+		changeOpenActions : (data) => dispatch({type :`${PREFIX_RUNS}_CHANGE_OPEN_ACTIONS`, data}),
+		openConfirm       : callOk => dispatch({type :`${PREFIX_CONFIRM}_OPEN`, data : {callOk}})
 	})
 )(Actions);

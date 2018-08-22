@@ -4,19 +4,24 @@ const noop = () => {};
 
 const initialState = {
 	isOpen  : false,
-	question : '',
+	question : 'You sure?',
 	callOk   : noop
 };
-// TODO: Back
+
 const dialogConfirm = (state = initialState, action) => {
 	// eslint-disable-next-line
 	switch (action.type) {
 
-		case `${PREFIX}_ERRORS`:
+
+		case `${PREFIX}_OPEN`:
 			return {
 				...state,
-				errors: action.data
+				...action.data,
+				isOpen: true
 			};
+
+		case `${PREFIX}_CLOSE`:
+			return {...initialState};
 	}
 	return state;
 };

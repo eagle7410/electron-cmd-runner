@@ -56,7 +56,10 @@ class Api {
 
 	static async deleteById(id) {
 		const runs = await this.getAll();
+
 		this.save(runs.filter(run => run.id !== id));
+
+		return true;
 	}
 }
 

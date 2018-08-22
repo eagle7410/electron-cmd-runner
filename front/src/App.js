@@ -4,6 +4,7 @@ import './App.css';
 import Tools from './componets/Tools'
 import ListCommand from './componets/ListCommand'
 import DialogCreateRun from './componets/DialogCreateRun'
+import DialogConfirm from './componets/DialogConfirm'
 import connect from "react-redux/es/connect/connect";
 import {PREFIX_RUNS} from "./const/prefix";
 import Api from './api';
@@ -27,6 +28,7 @@ class App extends Component {
 				</header>
 				<ListCommand />
 				<DialogCreateRun/>
+				<DialogConfirm />
 			</div>
 		);
 	}

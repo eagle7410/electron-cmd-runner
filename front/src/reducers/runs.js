@@ -9,10 +9,11 @@ const runs = (state = initialState, action) => {
 	// eslint-disable-next-line
 	switch (action.type) {
 
-		case `${PREFIX}_ERRORS`:
+
+		case `${PREFIX}_DROP_RUN`:
 			return {
 				...state,
-				errors : action.data
+				data : state.data.filter(run => run.id !== action.data)
 			};
 
 		case `${PREFIX}_INIT`:
@@ -24,7 +25,7 @@ const runs = (state = initialState, action) => {
 		case `${PREFIX}_ADD`:
 			return {
 				...state,
-				data : [...state.data, action.data]
+				data : [...state.data, action.data].map(run => ({...run, isOpen: false, isActionsOpen : false}))
 			};
 
 		case `${PREFIX}_CHANGE_OPEN_ACTIONS`:

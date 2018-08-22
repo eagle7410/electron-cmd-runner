@@ -5,52 +5,46 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import connect from "react-redux/es/connect/connect";
+import {PREFIX_CONFIRM as PREFIX} from "../const/prefix";
 
 
 const DialogConfirm = (state) => {
+	const handlerOk = () => {
+		state.store.callOk();
+		state.close();
+	};
+
 	return (
 		<div>
 			<Dialog
-				open={state.open}
-				onClose={this.handleClose}
+				open={state.store.isOpen}
+				onClose={() => state.close()}
 				aria-labelledby="alert-dialog-title"
 				aria-describedby="alert-dialog-description"
 			>
-				<DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
+				<DialogTitle id="alert-dialog-title">System.Confirm</DialogTitle>
 				<DialogContent>
-					<DialogContentText id="alert-dialog-description">
-						Let Google help apps determine location. This means sending anonymous location data to
-						Google, even when no apps are running.
-					</DialogContentText>
+					{state.store.question}
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={this.handleClose} color="primary">
-						Disagree
+					<Button onClick={() => state.close()} color="primary">
+						CANCEL
 					</Button>
-					<Button onClick={this.handleClose} color="primary" autoFocus>
-						Agree
+					<Button onClick={handlerOk} color="primary" autoFocus>
+						OK
 					</Button>
 				</DialogActions>
 			</Dialog>
 		</div>
 	);
 };
-class AlertDialog extends React.Component {
-	state = {
-		open: false,
-	};
 
-	handleClickOpen = () => {
-		this.setState({ open: true });
-	};
-
-	handleClose = () => {
-		this.setState({ open: false });
-	};
-
-	render() {
-
-	}
-}
-
-export default AlertDialog;
+export default connect(
+	state => ({
+		store : state.dialogConfirm,
+	}),
+	dispatch => ({
+		close : data => dispatch({type :`${PREFIX}_CLOSE`, data})
+	})
+)(DialogConfirm)

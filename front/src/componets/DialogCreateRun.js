@@ -44,6 +44,9 @@ const DialogCreateRun = (state) => {
 
 			await Api.add(data);
 
+			state.add(data);
+			state.close();
+
 		} catch (err) {
 			alert(err.message ? err.message : err);
 		}
