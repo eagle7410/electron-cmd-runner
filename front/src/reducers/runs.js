@@ -8,8 +8,6 @@ const runs = (state = initialState, action) => {
 	let data;
 	// eslint-disable-next-line
 	switch (action.type) {
-
-
 		case `${PREFIX}_DROP_RUN`:
 			return {
 				...state,

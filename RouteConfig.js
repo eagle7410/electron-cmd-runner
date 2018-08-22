@@ -8,6 +8,9 @@ const FileSystemDialog = require('./libs/FileSystemDialog');
 const LogManager       = require('./libs/LogManager');
 const ShellSession     = require('shell-session');
 
+const Send = require('./libs/Send');
+const Cmd = require('./libs/Cmd');
+
 let windowMain = null;
 let shell = null;
 
@@ -27,7 +30,16 @@ const route = (route, handler, method) => ({
 });
 
 const config = [
+	route('/run-and-exit', async (res, action, {cmd}) => {
+		await Cmd.run(cmd);
+		windowMain.emit('close');
+	},
+	route('/run', async (res, action, {cmd}) => {
 
+		await Cmd.run(cmd);
+
+		Send.ok(res, action);
+	})
 ];
 
 class RouteConfig {

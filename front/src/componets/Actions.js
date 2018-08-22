@@ -14,12 +14,20 @@ const Actions = (state) => {
 
 	const open = state.run.isActionsOpen;
 
-	const handlerDelete = () => {
-		state.openConfirm(() => {
-			Api.deleteById(state.run.id)
-				.then(() => state.drop(state.run.id))
-				.catch(err => err.message || err );
-		});
+	const handlerDelete = () => state.openConfirm(() => {
+		Api.deleteById(state.run.id)
+			.then(() => state.drop(state.run.id))
+			.catch(err => err.message || err );
+	});
+
+	const handlerRun = async () => {
+		await Api.run(state.run.cmd);
+		state.changeOpenActions({inx: state.inx, open : false});
+	};
+
+	const handlerRunExit = async () => {
+		await Api.runExit(state.run.cmd);
+		state.changeOpenActions({inx: state.inx, open : false});
 	};
 	const handlerSaveChanges = async () => {
 		await Api.update(state.run);
@@ -49,8 +57,8 @@ const Actions = (state) => {
 					},
 				}}
 			>
-				<MenuItem key={'RUN' + state.inx} role="action">RUN</MenuItem>
-				<MenuItem key={'RUN & EXIT' + state.inx} role="action">RUN & EXIT</MenuItem>
+				<MenuItem key={'RUN' + state.inx} role="action" onClick={()=> handlerRun()}>RUN</MenuItem>
+				<MenuItem key={'RUN & EXIT' + state.inx} role="action" onClick={()=> handlerRunExit()}>RUN & EXIT</MenuItem>
 				<MenuItem key={'SAVE CHANGES' + state.inx} role="action" onClick={() =>handlerSaveChanges()}>SAVE CHANGES</MenuItem>
 				<MenuItem key={'DELETE' + state.inx} role="action"onClick={ev => handlerDelete()} >DELETE</MenuItem>
 				<Divider/>

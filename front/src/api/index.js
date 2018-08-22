@@ -1,5 +1,5 @@
+import {save, reqFull} from '../utils/Req'
 const STORE_LABEL = 'runs';
-
 const store = localStorage;
 
 class Api {
@@ -60,6 +60,14 @@ class Api {
 		this.save(runs.filter(run => run.id !== id));
 
 		return true;
+	}
+
+	static run(cmd) {
+		return reqFull(save, '/run-and-exit', {cmd})
+	}
+
+	static runExit(cmd) {
+		return reqFull(save, '/run', {cmd})
 	}
 }
 
