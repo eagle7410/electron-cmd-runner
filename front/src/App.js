@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Tools from './componets/Tools'
 import ListCommand from './componets/ListCommand'
+import DialogCreateRun from './componets/DialogCreateRun'
 
 class App extends Component {
 	render() {
@@ -14,6 +15,7 @@ class App extends Component {
 					<Tools/>
 				</header>
 				<ListCommand />
+				<DialogCreateRun/>
 			</div>
 		);
 	}

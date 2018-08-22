@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
 import {runs} from './runs'
+import {dialogCreateRun} from './dialogCreateRun'
 
 const reducer = combineReducers({
-	runs
+	runs,
+	dialogCreateRun
 });
 
 export {reducer};

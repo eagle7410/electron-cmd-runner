@@ -6,10 +6,15 @@ import registerServiceWorker from './registerServiceWorker';
 
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
-import {composeWithDevTools} from 'redux-devtools-extension';
+import {composeWithDevTools, devToolsEnhancer} from 'redux-devtools-extension';
 import {reducer} from './reducers';
 
-const store = createStore(reducer, composeWithDevTools());
+
+const composeEnhancers = composeWithDevTools({
+	// options like actionSanitizer, stateSanitizer
+});
+
+const store = createStore(reducer, devToolsEnhancer());
 
 render(
 		<Provider store={store}>

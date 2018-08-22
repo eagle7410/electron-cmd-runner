@@ -1,22 +1,7 @@
 import {PREFIX_RUNS as PREFIX} from '../const/prefix'
 
 const initialState = {
-	data : [
-		{
-			label         : 'cmd1',
-			cmd           : 'ls',
-			comment       : 'Comment',
-			isOpen        : false,
-			isActionsOpen : false,
-		},
-		{
-			label         : 'cmd2',
-			cmd           : 'ls',
-			comment       : 'Comment',
-			isOpen        : false,
-			isActionsOpen : false,
-		}
-	]
+	data : []
 };
 
 const runs = (state = initialState, action) => {

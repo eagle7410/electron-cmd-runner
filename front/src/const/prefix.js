@@ -1,5 +1,7 @@
-const   PREFIX_RUNS =  'RUNS';
+const PREFIX_RUNS =  'RUNS';
+const PREFIX_RUN_CREATE =  'RUN_CREATE_DIALOG';
 
 module.exports = {
-	PREFIX_RUNS
+	PREFIX_RUNS,
+	PREFIX_RUN_CREATE
 };
