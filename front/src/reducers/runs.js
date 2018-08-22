@@ -15,6 +15,18 @@ const runs = (state = initialState, action) => {
 				errors : action.data
 			};
 
+		case `${PREFIX}_INIT`:
+			return {
+				...state,
+				data : action.data.map(run => ({...run, isOpen: false, isActionsOpen : false}))
+			};
+
+		case `${PREFIX}_ADD`:
+			return {
+				...state,
+				data : [...state.data, action.data]
+			};
+
 		case `${PREFIX}_CHANGE_OPEN_ACTIONS`:
 			data = state.data.map((run, inx) => {
 				if (inx === action.data.inx) run.isActionsOpen = action.data.open;
@@ -29,6 +41,17 @@ const runs = (state = initialState, action) => {
 		case `${PREFIX}_CHANGE_OPEN_PANEL`:
 			data = state.data.map((run, inx) => {
 				if (inx === action.data.inx) run.isOpen = action.data.isOpen;
+
+				return run;
+			});
+			return {
+				...state,
+				data
+			};
+
+		case `${PREFIX}_CHANGE_FIELD`:
+			data = state.data.map((run, inx) => {
+				if (inx === action.data.inx) run[action.data.field] = action.data.value;
 
 				return run;
 			});

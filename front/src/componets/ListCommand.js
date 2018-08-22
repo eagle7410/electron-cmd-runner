@@ -20,7 +20,6 @@ const ListCommand = (state) => {
 					No runs
 				</Typography>
 			</ExpansionPanelSummary>
-			<ExpansionPanelActions style={{display:'none'}}/>
 		</ExpansionPanel>
 	);
 
@@ -51,6 +50,7 @@ const ListCommand = (state) => {
 							value={run.cmd}
 							fullWidth={true}
 							className="field_cmd"
+							onChange={ev => state.input({inx, field : 'cmd', value : ev.target.value})}
 						/>
 						<TextField
 							id={`comment_${inx}`}
@@ -59,6 +59,7 @@ const ListCommand = (state) => {
 							fullWidth={true}
 							multiline={true}
 							className="field_cmd"
+							onChange={ev => state.input({inx, field : 'comment', value : ev.target.value})}
 						/>
 					</div>
 				</ExpansionPanelDetails>
@@ -79,6 +80,7 @@ export default connect(
 	}),
 	dispatch => ({
 		changeOpenPanel : (data) => dispatch({type :`${PREFIX}_CHANGE_OPEN_PANEL`, data}),
+		input : data => dispatch({type :`${PREFIX}_CHANGE_FIELD`, data})
 	})
 )(ListCommand)
 

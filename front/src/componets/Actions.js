@@ -6,18 +6,22 @@ import Divider from '@material-ui/core/Divider';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import connect from "react-redux/es/connect/connect";
 import {PREFIX_RUNS as PREFIX} from "../const/prefix";
-
-const options = [
-	'RUN',
-	'RUN & EXIT',
-	'CANCEL'
-];
+import Api from '../api';
 
 const ITEM_HEIGHT = 48;
 
 const Actions = (state) => {
 
 	const open = state.run.isActionsOpen;
+
+	const handlerDelete = async () => {
+		if (!window.confirm('You sure?')) return false;
+		alert('DD');
+	};
+	const handlerSaveChanges = async () => {
+		await Api.update(state.run);
+		state.changeOpenActions({inx: state.inx, open : false});
+	};
 
 	return (
 		<span role="actions">
@@ -44,6 +48,8 @@ const Actions = (state) => {
 			>
 				<MenuItem key={'RUN' + state.inx} role="action">RUN</MenuItem>
 				<MenuItem key={'RUN & EXIT' + state.inx} role="action">RUN & EXIT</MenuItem>
+				<MenuItem key={'SAVE CHANGES' + state.inx} role="action" onClick={() =>handlerSaveChanges()}>SAVE CHANGES</MenuItem>
+				<MenuItem key={'DELETE' + state.inx} role="action">DELETE</MenuItem>
 				<Divider/>
 				<MenuItem key={'CANCEL ' + state.inx} role="action" onClick={ev => {
 					ev.preventDefault();

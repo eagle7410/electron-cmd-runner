@@ -8,7 +8,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-import {PREFIX_RUN_CREATE as PREFIX} from "../const/prefix";
+import {
+	PREFIX_RUN_CREATE as PREFIX,
+	PREFIX_RUNS
+} from "../const/prefix";
+
+import Api from "../api";
 
 const fields = {
 	label   : 'Label',
@@ -17,6 +22,32 @@ const fields = {
 };
 
 const DialogCreateRun = (state) => {
+
+
+	const handlerCreate = async () => {
+		try {
+
+			let errors = {}, data = {};
+
+			state.errors(errors);
+
+			Object.keys(fields).map(prop => {
+				if (!state.store[prop].length) errors[prop]= `${fields[prop]} is required.`;
+				data[prop] = state.store[prop];
+			});
+
+			if (Object.keys(errors).length) {
+				state.errors(errors);
+
+				return false;
+			}
+
+			await Api.add(data);
+
+		} catch (err) {
+			alert(err.message ? err.message : err);
+		}
+	};
 
 	return (
 		<div>
@@ -46,7 +77,7 @@ const DialogCreateRun = (state) => {
 					<Button onClick={state.close} color="primary" autoFocus>
 						Chancel
 					</Button>
-					<Button onClick={() => alert('Create run')} color="primary" >
+					<Button onClick={() => handlerCreate()} color="primary" >
 						Create
 					</Button>
 				</DialogActions>
@@ -60,7 +91,9 @@ export default connect(
 		store: state.dialogCreateRun
 	}),
 	dispatch => ({
-		close : () => dispatch({type :`${PREFIX}_CLOSE`}),
-		input : (data) => dispatch({type :`${PREFIX}_INPUT`, data}),
+		add    : (data) => dispatch({type :`${PREFIX_RUNS}_ADD`, data}),
+		errors : (data) => dispatch({type :`${PREFIX}_ERRORS`, data}),
+		close  : () => dispatch({type :`${PREFIX}_CLOSE`}),
+		input  : (data) => dispatch({type :`${PREFIX}_INPUT`, data}),
 	})
 )(DialogCreateRun);

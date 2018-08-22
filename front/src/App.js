@@ -4,8 +4,19 @@ import './App.css';
 import Tools from './componets/Tools'
 import ListCommand from './componets/ListCommand'
 import DialogCreateRun from './componets/DialogCreateRun'
+import connect from "react-redux/es/connect/connect";
+import {PREFIX_RUNS} from "./const/prefix";
+import Api from './api';
 
 class App extends Component {
+	constructor() {
+		super();
+
+		Api.getAll()
+			.then(data => this.props.init(data))
+			.catch(err => alert(err.message ? err.message : err));
+	}
+
 	render() {
 		return (
 			<div className="App">
@@ -20,5 +31,9 @@ class App extends Component {
 		);
 	}
 }
-
-export default App;
+export default connect(
+	state => ({}),
+	dispatch => ({
+		init   : (data) => dispatch({type :`${PREFIX_RUNS}_INIT`, data}),
+	})
+)(App);
