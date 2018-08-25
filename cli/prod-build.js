@@ -13,7 +13,7 @@ const getCommand = () => {
 
 	return `
 		rm -r ${prjPath}/html
-        cd ${prjPath}/frontend
+        cd ${prjPath}/front
         export PUBLIC_URL=../html 
         npm run build
         cp -R ./build ../html

@@ -34,13 +34,16 @@ const Actions = (state) => {
 		state.changeOpenActions({inx: state.inx, open : false});
 	};
 
+	const role = 'action';
+	const blockRole = 'actions';
+
 	return (
-		<span role="actions">
+		<span role={blockRole}>
 			<IconButton
 				aria-label="More"
 				onClick={ev => {
 					ev.preventDefault();
-					ev.target.setAttribute('role', 'actions');
+					ev.target.setAttribute('role', blockRole);
 					state.changeOpenActions({inx: state.inx, open : !open});
 				}}
 				aria-haspopup="true"
@@ -57,14 +60,14 @@ const Actions = (state) => {
 					},
 				}}
 			>
-				<MenuItem key={'RUN' + state.inx} role="action" onClick={()=> handlerRun()}>RUN</MenuItem>
-				<MenuItem key={'RUN & EXIT' + state.inx} role="action" onClick={()=> handlerRunExit()}>RUN & EXIT</MenuItem>
-				<MenuItem key={'SAVE CHANGES' + state.inx} role="action" onClick={() =>handlerSaveChanges()}>SAVE CHANGES</MenuItem>
-				<MenuItem key={'DELETE' + state.inx} role="action"onClick={ev => handlerDelete()} >DELETE</MenuItem>
+				<MenuItem key={'RUN' + state.inx} role={role} onClick={()=> handlerRun()}>RUN</MenuItem>
+				<MenuItem key={'RUN & EXIT' + state.inx} role={role} onClick={()=> handlerRunExit()}>RUN & EXIT</MenuItem>
+				<MenuItem key={'SAVE CHANGES' + state.inx} role={role} onClick={() =>handlerSaveChanges()}>SAVE CHANGES</MenuItem>
+				<MenuItem key={'DELETE' + state.inx} role={role} onClick={ev => handlerDelete()} >DELETE</MenuItem>
 				<Divider/>
-				<MenuItem key={'CANCEL ' + state.inx} role="action" onClick={ev => {
+				<MenuItem key={'CANCEL ' + state.inx} role={role} onClick={ev => {
 					ev.preventDefault();
-					ev.target.setAttribute('role', 'actions');
+					ev.target.setAttribute('role', blockRole);
 					state.changeOpenActions({inx: state.inx, open : false});
 				}}>CANCEL</MenuItem>
 			</Menu>

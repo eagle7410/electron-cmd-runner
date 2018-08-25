@@ -19,14 +19,17 @@ const includes = async () => {
 
 		//~ End dev setting
 
-		let mainWindow = new BrowserWindow({});
-		mainWindow.maximize();
+		let mainWindow = new BrowserWindow({
+			width  : 320,
+			height : 600
+		});
 
 		await Server.run(mainWindow, isDev);
 
 		//~ Dev setting
 
 		mainWindow.toggleDevTools();
+		mainWindow.maximize();
 
 		//~ End dev setting
 

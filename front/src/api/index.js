@@ -63,11 +63,11 @@ class Api {
 	}
 
 	static run(cmd) {
-		return reqFull(save, '/run-and-exit', {cmd})
+		return reqFull(save, '/run', {cmd})
 	}
 
 	static runExit(cmd) {
-		return reqFull(save, '/run', {cmd})
+		return reqFull(save, '/run-and-exit', {cmd})
 	}
 }
 

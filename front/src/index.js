@@ -5,14 +5,9 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
-import {composeWithDevTools, devToolsEnhancer} from 'redux-devtools-extension';
+import {createStore} from 'redux';
+import {devToolsEnhancer} from 'redux-devtools-extension';
 import {reducer} from './reducers';
-
-
-const composeEnhancers = composeWithDevTools({
-	// options like actionSanitizer, stateSanitizer
-});
 
 const store = createStore(reducer, devToolsEnhancer());
 

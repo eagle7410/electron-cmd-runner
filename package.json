@@ -2,9 +2,13 @@
   "name": "electron-cmd-runner",
   "version": "1.0.0",
   "description": "electron cmd runner",
-  "main": "index-app-dev.js",
+  "main": "index-app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "pkg-linux": "electron-packager . docker-manager --overwrite --platform=linux  --arch=x64  --ignore='.jscsrc|/docs-attach|/app_build|/frontend|/cli|/*-dev|.gitignore|/.idea|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.png --prune=true --out=app_build",
+    "pkg-win": "electron-packager . docker-manager --overwrite --platform=win32  --arch=x64 --ignore='.jscsrc|/docs-attach|/app_build|/frontend|/cli|/*-dev|.gitignore|/.idea|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.ico --prune=true --out=app_build -version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName='Manadger'",
+    "pkg-mac": "electron-packager . docker-manager --overwrite --platform=darwin --arch=x64  --ignore='.jscsrc|/docs-attach|/app_build|/frontend|/cli|/*-dev|.gitignore|/.idea|/node_modules/(babel*|gulp*|electron*|grunt*)|/.idea/' --icon=fav.icns --prune=true --out=app_build"
   },
   "repository": {
     "type": "git",
@@ -17,10 +21,10 @@
     "node-cmd": "3.0.0"
   },
   "devDependencies": {
+    "console-color": "https://github.com/eagle7410/console-color.git",
     "electron": "2.0.5",
     "electron-devtools-installer": "2.2.4",
-    "electron-packager": "12.1.0",
-    "console-color": "https://github.com/eagle7410/console-color.git"
+    "electron-packager": "12.1.0"
   },
   "bugs": {
     "url": "https://github.com/eagle7410/electron-cmd-runner/issues"

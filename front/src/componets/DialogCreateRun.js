@@ -31,6 +31,7 @@ const DialogCreateRun = (state) => {
 
 			state.errors(errors);
 
+			// eslint-disable-next-line
 			Object.keys(fields).map(prop => {
 				if (!state.store[prop].length) errors[prop]= `${fields[prop]} is required.`;
 				data[prop] = state.store[prop];

@@ -50,20 +50,10 @@ const correctPackageJson = () => new Promise((ok, bad) => {
 	});
 });
 
-const clearLogFile = async () => {
-	const transform = data => new Promise(write => write('This is log file\n'));
-
-	await fileContentChange(root + 'libs/log.txt', root + 'libs/log.txt', transform);
-
-	log.success('Clear log file is ok.');
-
-};
-
 void async function createProdStart() {
 	try {
 		await createIndex();
 		await correctPackageJson();
-		await clearLogFile();
 
 		log.success('Success ...');
 
